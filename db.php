@@ -33,6 +33,28 @@ function getDB(): PDO
 }
 
 /**
+ * Ensure the users table supports mandatory password changes.
+ *
+ * This keeps existing Docker/Proxmox databases compatible after pulling a new
+ * version of the application, without requiring a destructive DB reset.
+ *
+ * @return void
+ */
+function ensurePasswordChangeColumn(): void
+{
+    static $checked = false;
+
+    if ($checked) {
+        return;
+    }
+
+    $pdo = getDB();
+    $pdo->exec('ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS requiere_cambio_password TINYINT(1) NOT NULL DEFAULT 0 AFTER password_hash');
+
+    $checked = true;
+}
+
+/**
  * Fetch perfil data from the database.
  *
  * Queries the single-row perfil table and returns the row as an associative

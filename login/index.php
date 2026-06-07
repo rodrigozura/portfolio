@@ -3,6 +3,11 @@ session_start();
 
 // Redirect to dashboard if already authenticated
 if (isset($_SESSION['usuario_id'])) {
+    if (!empty($_SESSION['requiere_cambio_password'])) {
+        header('Location: /cambiar_password.php');
+        exit;
+    }
+
     header('Location: /dashboard');
     exit;
 }
@@ -25,14 +30,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 $pdo  = getDB();
-                $stmt = $pdo->prepare('SELECT id, usuario, password_hash FROM usuarios WHERE usuario = ?');
+                ensurePasswordChangeColumn();
+
+                $stmt = $pdo->prepare('SELECT id, usuario, password_hash, requiere_cambio_password FROM usuarios WHERE usuario = ?');
                 $stmt->execute([$username]);
                 $user = $stmt->fetch();
 
                 if ($user && password_verify($password, $user['password_hash'])) {
+                    $requiresPasswordChange = (bool)$user['requiere_cambio_password'];
+
+                    if ($user['usuario'] === 'admin' && password_verify('admin123', $user['password_hash'])) {
+                        $requiresPasswordChange = true;
+                        $forceChange = $pdo->prepare('UPDATE usuarios SET requiere_cambio_password = 1 WHERE id = ?');
+                        $forceChange->execute([$user['id']]);
+                    }
+
                     session_regenerate_id(true);
                     $_SESSION['usuario_id']   = $user['id'];
                     $_SESSION['usuario_nombre'] = $user['usuario'];
+                    $_SESSION['requiere_cambio_password'] = $requiresPasswordChange;
+
+                    if ($_SESSION['requiere_cambio_password']) {
+                        header('Location: /cambiar_password.php');
+                        exit;
+                    }
+
                     header('Location: /dashboard');
                     exit;
                 }

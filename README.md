@@ -93,7 +93,7 @@ blog-personal-app-1        Up             0.0.0.0:8080->80/tcp
 blog-personal-db-1         Up             3306/tcp
 ```
 
-> **Nota**: La primera vez que se ejecuta, MariaDB ejecuta automáticamente el archivo `db/init.sql` que crea las tablas `publicaciones` y `usuarios`, e inserta las tres publicaciones semilla.
+> **Nota**: La primera vez que se ejecuta, MariaDB ejecuta automáticamente el archivo `db/init.sql` que crea las tablas `publicaciones`, `perfil` y `usuarios`, e inserta los datos semilla.
 
 ### 4. Crear el usuario administrador
 
@@ -104,6 +104,8 @@ docker compose exec app php /var/www/html/db/init-admin.php
 ```
 
 Si ves `✅ Admin user created successfully.`, ya está listo. Si ves un error de conexión, esperá unos segundos y volvé a intentarlo — MariaDB puede tardar unos segundos en estar lista.
+
+El primer ingreso con `admin` / `admin123` obliga a cambiar la contraseña antes de usar el dashboard. La nueva contraseña se guarda hasheada en la base de datos.
 
 ### 5. Abrir el blog
 
@@ -158,7 +160,7 @@ docker compose logs -f
 |-----|---------|-----------|
 | Admin | `admin` | `admin123` |
 
-> **⚠️ IMPORTANTE**: Cambiar la contraseña antes de cualquier despliegue a producción. La contraseña se genera con `password_hash()` al ejecutar `db/init-admin.php`. Para cambiarla, editar el script o insertar un nuevo hash directamente en la base de datos.
+> **⚠️ IMPORTANTE**: La contraseña inicial solo sirve para el primer acceso. El sistema obliga a cambiarla y guarda la nueva contraseña con `password_hash()`.
 
 ## Administración
 
@@ -166,6 +168,7 @@ docker compose logs -f
 |------|--------|-------------|
 | `/` | Público | Home con presentación, publicaciones y link al informe PDF |
 | `/login` | Público | Inicio de sesión del administrador |
+| `/cambiar_password.php` | Admin | Cambio obligatorio de contraseña inicial |
 | `/dashboard` | Admin | Panel de administración protegido |
 | `/logout.php` | Admin | Cerrar sesión |
 
@@ -191,6 +194,7 @@ Estas publicaciones son editables desde el dashboard.
 
 - Contraseña hasheada con `password_hash()` (bcrypt)
 - Verificación con `password_verify()`
+- Cambio obligatorio de la contraseña inicial `admin123`
 - Consultas preparadas con PDO (sin inyección SQL)
 - CSRF token en formularios de crear, editar y eliminar
 - Escape de salida con `htmlspecialchars()` (XSS)
@@ -256,6 +260,7 @@ blog_personal/
 ├── index.php               # Home público
 ├── db.php                  # Conexión PDO
 ├── auth.php                # Guard de autenticación
+├── cambiar_password.php    # Cambio obligatorio de contraseña inicial
 ├── logout.php              # Cierre de sesión
 ├── guardar_publicacion.php # Handler de creación
 ├── login/

@@ -26,6 +26,7 @@ $successMessages = [
     'creado'  => 'Publicación creada correctamente.',
     'editado' => 'Publicación actualizada correctamente.',
     'eliminado' => 'Publicación eliminada correctamente.',
+    'password_changed' => 'Contraseña actualizada correctamente.',
 ];
 
 $errorMessages = [

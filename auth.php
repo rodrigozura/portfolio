@@ -7,7 +7,7 @@
  *
  * @return void
  */
-function requiere_autenticacion(): void
+function requiere_autenticacion(bool $permitir_cambio_password = false): void
 {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -15,6 +15,11 @@ function requiere_autenticacion(): void
 
     if (!isset($_SESSION['usuario_id'])) {
         header('Location: /login');
+        exit;
+    }
+
+    if (!$permitir_cambio_password && !empty($_SESSION['requiere_cambio_password'])) {
+        header('Location: /cambiar_password.php');
         exit;
     }
 }

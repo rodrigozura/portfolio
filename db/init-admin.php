@@ -27,22 +27,32 @@ try {
         ]
     );
 
-    $check = $pdo->prepare('SELECT id FROM usuarios WHERE usuario = ?');
-    $check->execute(['admin']);
+    $pdo->exec('ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS requiere_cambio_password TINYINT(1) NOT NULL DEFAULT 0 AFTER password_hash');
 
-    if ($check->fetch()) {
+    $check = $pdo->prepare('SELECT id, password_hash, requiere_cambio_password FROM usuarios WHERE usuario = ?');
+    $check->execute(['admin']);
+    $admin = $check->fetch();
+
+    if ($admin) {
+        if (password_verify('admin123', $admin['password_hash']) && !(bool)$admin['requiere_cambio_password']) {
+            $forceChange = $pdo->prepare('UPDATE usuarios SET requiere_cambio_password = 1 WHERE id = ?');
+            $forceChange->execute([$admin['id']]);
+            echo "✅ Admin user already exists. Mandatory password change enabled.\n";
+            exit(0);
+        }
+
         echo "✅ Admin user already exists. Nothing to do.\n";
         exit(0);
     }
 
     $hash   = password_hash('admin123', PASSWORD_DEFAULT);
-    $insert = $pdo->prepare('INSERT INTO usuarios (usuario, password_hash) VALUES (?, ?)');
-    $insert->execute(['admin', $hash]);
+    $insert = $pdo->prepare('INSERT INTO usuarios (usuario, password_hash, requiere_cambio_password) VALUES (?, ?, ?)');
+    $insert->execute(['admin', $hash, 1]);
 
     echo "✅ Admin user created successfully.\n";
     echo "   Username: admin\n";
     echo "   Password: admin123\n";
-    echo "   ⚠️  Change the password before deploying to production.\n";
+    echo "   ⚠️  The first login will require changing this password.\n";
 } catch (PDOException $e) {
     echo "❌ Error: " . $e->getMessage() . "\n";
     exit(1);

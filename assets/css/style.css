@@ -757,6 +757,12 @@ p, .about-text, .pub-excerpt, .empty-state-text,
     color: var(--text-primary);
 }
 
+.login-helper {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
+}
+
 /* ===================================================================
  * DASHBOARD
  * =================================================================== */
