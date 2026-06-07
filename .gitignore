@@ -1,0 +1,39 @@
+# ─── Environment ─────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─── OS ──────────────────────────────────────────────────────
+Thumbs.db
+.DS_Store
+Desktop.ini
+*.swp
+*.swo
+*~
+
+# ─── IDE / Editor ────────────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# ─── Docker ──────────────────────────────────────────────────
+.docker/
+
+# ─── PHP ─────────────────────────────────────────────────────
+vendor/
+composer.lock
+composer.phar
+*.log
+
+# ─── SDD / Planning (not part of the deployed app) ───────────
+.atl/
+.impeccable/
+openspec/
+product-definition/
+docs/
+
+# ─── Assets (placeholders — replace before deploy) ──────────
+assets/img/foto-personal.jpg
+assets/docs/informe-tpf.pdf
