@@ -53,4 +53,5 @@ En resumen, me considero una persona analítica, curiosa y orientada a construir
     'XXXX XXXX, XXXX',
     'https://github.com/XXXX',
     'https://www.linkedin.com/in/XXXX/'
+FROM DUAL
 WHERE NOT EXISTS (SELECT 1 FROM perfil LIMIT 1);
