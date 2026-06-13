@@ -30,7 +30,7 @@ try {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= app_url('/assets/css/style.css') ?>">
+    <link rel="stylesheet" href="<?= app_url('/assets/style.php') ?>">
 </head>
 <body>
 
@@ -157,7 +157,7 @@ try {
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-<script src="<?= app_url('/assets/js/main.js') ?>" defer></script>
+<script src="<?= app_url('/assets/main.php') ?>" defer></script>
 
 </body>
 </html>
