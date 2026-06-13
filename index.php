@@ -95,7 +95,7 @@ try {
         <div class="about-grid">
             <div class="about-image-col">
                 <?php if (file_exists(__DIR__ . '/assets/img/foto_perfil.png')): ?>
-                    <img src="<?= app_url('/assets/img/foto_perfil.png') ?>"
+                    <img src="<?= app_url('/assets/profile-image.php') ?>"
                          alt="Rodrigo Zurita"
                          class="about-photo"
                          loading="lazy">

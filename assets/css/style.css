@@ -261,7 +261,7 @@ p, .about-text, .pub-excerpt, .empty-state-text,
     position: relative;
     background:
         linear-gradient(90deg, rgba(7, 11, 15, 0.28) 0%, rgba(7, 11, 15, 0.08) 48%, rgba(7, 11, 15, 0) 72%),
-        url('/assets/img/foto_escritorio_tomando_mate.png') center center / cover no-repeat;
+        url('hero-image.php') center center / cover no-repeat;
     isolation: isolate;
 }
 
@@ -1003,7 +1003,7 @@ p, .about-text, .pub-excerpt, .empty-state-text,
         justify-content: center;
         background:
             linear-gradient(180deg, rgba(7, 11, 15, 0.52) 0%, rgba(7, 11, 15, 0.36) 100%),
-            url('/assets/img/foto_escritorio_tomando_mate.png') center center / cover no-repeat;
+            url('hero-image.php') center center / cover no-repeat;
     }
 
     .hero-container {
