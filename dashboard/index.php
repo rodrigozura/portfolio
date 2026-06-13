@@ -48,19 +48,19 @@ $errorMessages = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= app_url('/assets/css/style.css') ?>">
 </head>
 <body class="dashboard-body">
 
 <!-- ===== Dashboard Nav ===== -->
 <nav class="navbar dashboard-nav">
     <div class="container nav-container">
-        <a href="/" class="nav-logo" aria-label="Ir al inicio">RZ</a>
+        <a href="<?= app_url('/') ?>" class="nav-logo" aria-label="Ir al inicio">RZ</a>
         <div class="nav-links">
             <span class="nav-greeting">Hola, <?= htmlspecialchars($_SESSION['usuario_nombre'] ?? 'Admin', ENT_QUOTES, 'UTF-8') ?></span>
-            <a href="/dashboard/perfil.php" class="nav-link-icon">Perfil</a>
-            <a href="/" class="nav-link-icon" target="_blank">Ver sitio</a>
-            <a href="/logout.php" class="nav-link-icon nav-logout">Cerrar sesión</a>
+            <a href="<?= app_url('/dashboard/perfil.php') ?>" class="nav-link-icon">Perfil</a>
+            <a href="<?= app_url('/') ?>" class="nav-link-icon" target="_blank">Ver sitio</a>
+            <a href="<?= app_url('/logout.php') ?>" class="nav-link-icon nav-logout">Cerrar sesión</a>
         </div>
     </div>
 </nav>
@@ -92,7 +92,7 @@ $errorMessages = [
     <!-- ===== Create Form ===== -->
     <section class="dashboard-section">
         <h2 class="section-headline">Nueva publicación</h2>
-        <form method="POST" action="/guardar_publicacion.php" class="pub-form" novalidate>
+        <form method="POST" action="<?= app_url('/guardar_publicacion.php') ?>" class="pub-form" novalidate>
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
 
             <div class="form-group">
@@ -148,8 +148,8 @@ $errorMessages = [
                             </div>
                         </div>
                         <div class="pub-list-actions">
-                            <a href="/dashboard/editar.php?id=<?= (int)$pub['id'] ?>" class="btn btn-secondary btn-sm">Editar</a>
-                            <a href="/dashboard/eliminar.php?id=<?= (int)$pub['id'] ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="<?= app_url('/dashboard/editar.php?id=' . (int)$pub['id']) ?>" class="btn btn-secondary btn-sm">Editar</a>
+                            <a href="<?= app_url('/dashboard/eliminar.php?id=' . (int)$pub['id']) ?>" class="btn btn-danger btn-sm">Eliminar</a>
                         </div>
                     </div>
                 <?php endforeach; ?>

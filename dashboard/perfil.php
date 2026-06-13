@@ -41,23 +41,23 @@ $errorMessages = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= app_url('/assets/css/style.css') ?>">
 </head>
 <body class="dashboard-body">
 
 <nav class="navbar dashboard-nav">
     <div class="container nav-container">
-        <a href="/dashboard" class="nav-logo" aria-label="Volver al panel">RZ</a>
+        <a href="<?= app_url('/dashboard') ?>" class="nav-logo" aria-label="Volver al panel">RZ</a>
         <div class="nav-links">
-            <a href="/" class="nav-link-icon" target="_blank">Ver sitio</a>
-            <a href="/logout.php" class="nav-link-icon nav-logout">Cerrar sesión</a>
+            <a href="<?= app_url('/') ?>" class="nav-link-icon" target="_blank">Ver sitio</a>
+            <a href="<?= app_url('/logout.php') ?>" class="nav-link-icon nav-logout">Cerrar sesión</a>
         </div>
     </div>
 </nav>
 
 <main class="dashboard-main container">
 
-    <a href="/dashboard" class="btn btn-secondary btn-sm" style="margin-bottom: 1rem;">&larr; Volver al panel</a>
+    <a href="<?= app_url('/dashboard') ?>" class="btn btn-secondary btn-sm" style="margin-bottom: 1rem;">&larr; Volver al panel</a>
     <h1 class="dashboard-headline">Editar Perfil</h1>
 
     <!-- ===== Status Messages ===== -->
@@ -81,7 +81,7 @@ $errorMessages = [
     <?php endif; ?>
 
     <section class="dashboard-section">
-        <form method="POST" action="/guardar_perfil.php" class="pub-form" novalidate>
+        <form method="POST" action="<?= app_url('/guardar_perfil.php') ?>" class="pub-form" novalidate>
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
 
             <div class="form-group">
@@ -144,7 +144,7 @@ $errorMessages = [
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                <a href="/dashboard" class="btn btn-secondary">Cancelar</a>
+                <a href="<?= app_url('/dashboard') ?>" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </section>

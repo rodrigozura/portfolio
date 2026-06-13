@@ -5,8 +5,7 @@ require_once __DIR__ . '/db.php';
 requiere_autenticacion(true);
 
 if (empty($_SESSION['requiere_cambio_password'])) {
-    header('Location: /dashboard');
-    exit;
+    app_redirect('/dashboard');
 }
 
 $error = '';
@@ -51,8 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['requiere_cambio_password'] = false;
                     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
-                    header('Location: /dashboard?success=password_changed');
-                    exit;
+                    app_redirect('/dashboard?success=password_changed');
                 }
             } catch (PDOException $e) {
                 $error = 'Error de base de datos. Intente nuevamente.';
@@ -69,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= app_url('/assets/css/style.css') ?>">
 </head>
 <body class="login-body">
 
@@ -84,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="/cambiar_password.php" class="login-form" novalidate>
+        <form method="POST" action="<?= app_url('/cambiar_password.php') ?>" class="login-form" novalidate>
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
 
             <div class="form-group">
@@ -116,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="btn btn-primary btn-full">Guardar contraseña</button>
         </form>
 
-        <a href="/logout.php" class="login-back">Cerrar sesión</a>
+        <a href="<?= app_url('/logout.php') ?>" class="login-back">Cerrar sesión</a>
     </div>
 </main>
 

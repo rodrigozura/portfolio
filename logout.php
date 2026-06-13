@@ -1,5 +1,5 @@
 <?php
+require_once __DIR__ . '/db.php';
 session_start();
 session_destroy();
-header('Location: /login');
-exit;
+app_redirect('/login');

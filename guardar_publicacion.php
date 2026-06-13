@@ -13,15 +13,13 @@ requiere_autenticacion();
 
 // Ensure this is a POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /dashboard');
-    exit;
+    app_redirect('/dashboard');
 }
 
 // CSRF validation
 if (!isset($_POST['csrf_token'], $_SESSION['csrf_token'])
     || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-    header('Location: /dashboard?error=csrf');
-    exit;
+    app_redirect('/dashboard?error=csrf');
 }
 
 // Validate inputs
@@ -46,8 +44,7 @@ if (mb_strlen($categoria) > 80) {
 }
 
 if (!empty($errors)) {
-    header('Location: /dashboard?error=' . implode(',', $errors));
-    exit;
+    app_redirect('/dashboard?error=' . implode(',', $errors));
 }
 
 try {
@@ -57,9 +54,7 @@ try {
     );
     $stmt->execute([$titulo, $contenido, $categoria !== '' ? $categoria : null]);
 
-    header('Location: /dashboard?success=creado');
-    exit;
+    app_redirect('/dashboard?success=creado');
 } catch (PDOException $e) {
-    header('Location: /dashboard?error=db');
-    exit;
+    app_redirect('/dashboard?error=db');
 }

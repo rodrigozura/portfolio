@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/db.php';
+
 /**
  * Authentication guard.
  *
@@ -14,12 +16,10 @@ function requiere_autenticacion(bool $permitir_cambio_password = false): void
     }
 
     if (!isset($_SESSION['usuario_id'])) {
-        header('Location: /login');
-        exit;
+        app_redirect('/login');
     }
 
     if (!$permitir_cambio_password && !empty($_SESSION['requiere_cambio_password'])) {
-        header('Location: /cambiar_password.php');
-        exit;
+        app_redirect('/cambiar_password.php');
     }
 }

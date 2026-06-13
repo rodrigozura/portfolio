@@ -82,3 +82,50 @@ function getPerfil(): array
 
     return $row;
 }
+
+/**
+ * Return the application base path (no trailing slash).
+ *
+ * Reads APP_BASE_PATH from the environment. Defaults to an empty string
+ * so the app still works when deployed at web root.
+ *
+ * Example: '/38249507' when APP_BASE_PATH=/38249507 is set in .env.
+ *
+ * @return string
+ */
+function app_base(): string
+{
+    static $base = null;
+
+    if ($base === null) {
+        $base = rtrim(getenv('APP_BASE_PATH') ?: '', '/');
+    }
+
+    return $base;
+}
+
+/**
+ * Build an application URL from a root-relative path.
+ *
+ * Prepends the configured base path so URLs are correct whether the app
+ * runs at web root or under a sub-path like /38249507.
+ *
+ * @param string $path Root-relative path, e.g. '/login' or '/assets/css/style.css'
+ * @return string
+ */
+function app_url(string $path): string
+{
+    return app_base() . '/' . ltrim($path, '/');
+}
+
+/**
+ * Redirect to an application URL and terminate execution.
+ *
+ * @param string $path Root-relative path, e.g. '/dashboard'
+ * @return void
+ */
+function app_redirect(string $path): void
+{
+    header('Location: ' . app_url($path));
+    exit;
+}

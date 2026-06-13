@@ -14,15 +14,13 @@ requiere_autenticacion();
 
 // Ensure this is a POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /dashboard/perfil.php');
-    exit;
+    app_redirect('/dashboard/perfil.php');
 }
 
 // CSRF validation
 if (!isset($_POST['csrf_token'], $_SESSION['csrf_token'])
     || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-    header('Location: /dashboard/perfil.php?error=csrf');
-    exit;
+    app_redirect('/dashboard/perfil.php?error=csrf');
 }
 
 // Validate inputs
@@ -63,8 +61,7 @@ if ($linkedin_url !== '' && filter_var($linkedin_url, FILTER_VALIDATE_URL) === f
 }
 
 if (!empty($errors)) {
-    header('Location: /dashboard/perfil.php?error=' . implode(',', $errors));
-    exit;
+    app_redirect('/dashboard/perfil.php?error=' . implode(',', $errors));
 }
 
 try {
@@ -96,9 +93,7 @@ try {
         $linkedin_url !== '' ? $linkedin_url : null,
     ]);
 
-    header('Location: /dashboard/perfil.php?success=guardado');
-    exit;
+    app_redirect('/dashboard/perfil.php?success=guardado');
 } catch (PDOException $e) {
-    header('Location: /dashboard/perfil.php?error=db');
-    exit;
+    app_redirect('/dashboard/perfil.php?error=db');
 }

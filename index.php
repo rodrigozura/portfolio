@@ -30,16 +30,16 @@ try {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= app_url('/assets/css/style.css') ?>">
 </head>
 <body>
 
 <!-- ===== Navigation ===== -->
 <nav class="navbar" role="navigation" aria-label="Navegación principal">
     <div class="container nav-container">
-        <a href="/" class="nav-logo" aria-label="Ir al inicio">RZ</a>
+        <a href="<?= app_url('/') ?>" class="nav-logo" aria-label="Ir al inicio">RZ</a>
         <ul class="nav-links">
-            <li><a href="/" class="active">Inicio</a></li>
+            <li><a href="<?= app_url('/') ?>" class="active">Inicio</a></li>
             <li><a href="#about">Sobre mí</a></li>
             <li><a href="#publicaciones">Publicaciones</a></li>
 
@@ -95,7 +95,7 @@ try {
         <div class="about-grid">
             <div class="about-image-col">
                 <?php if (file_exists(__DIR__ . '/assets/img/foto_perfil.png')): ?>
-                    <img src="/assets/img/foto_perfil.png"
+                    <img src="<?= app_url('/assets/img/foto_perfil.png') ?>"
                          alt="Rodrigo Zurita"
                          class="about-photo"
                          loading="lazy">
@@ -157,7 +157,7 @@ try {
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-<script src="/assets/js/main.js" defer></script>
+<script src="<?= app_url('/assets/js/main.js') ?>" defer></script>
 
 </body>
 </html>

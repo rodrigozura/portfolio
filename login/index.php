@@ -1,18 +1,16 @@
 <?php
+require_once __DIR__ . '/../db.php';
+
 session_start();
 
 // Redirect to dashboard if already authenticated
 if (isset($_SESSION['usuario_id'])) {
     if (!empty($_SESSION['requiere_cambio_password'])) {
-        header('Location: /cambiar_password.php');
-        exit;
+        app_redirect('/cambiar_password.php');
     }
 
-    header('Location: /dashboard');
-    exit;
+    app_redirect('/dashboard');
 }
-
-require_once __DIR__ . '/../db.php';
 
 $error = '';
 
@@ -51,12 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['requiere_cambio_password'] = $requiresPasswordChange;
 
                     if ($_SESSION['requiere_cambio_password']) {
-                        header('Location: /cambiar_password.php');
-                        exit;
+                        app_redirect('/cambiar_password.php');
                     }
 
-                    header('Location: /dashboard');
-                    exit;
+                    app_redirect('/dashboard');
                 }
 
                 $error = 'Usuario o contraseña incorrectos.';
@@ -80,13 +76,13 @@ if (!isset($_SESSION['csrf_token'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= app_url('/assets/css/style.css') ?>">
 </head>
 <body class="login-body">
 
 <main class="login-wrapper">
     <div class="login-panel">
-        <a href="/" class="login-back">&larr; Volver al inicio</a>
+        <a href="<?= app_url('/') ?>" class="login-back">&larr; Volver al inicio</a>
         <h1 class="login-title">Iniciar sesión</h1>
 
         <?php if ($error !== ''): ?>
@@ -95,7 +91,7 @@ if (!isset($_SESSION['csrf_token'])) {
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="/login/" class="login-form" novalidate>
+        <form method="POST" action="<?= app_url('/login/') ?>" class="login-form" novalidate>
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
 
             <div class="form-group">
