@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/db.php';
 
+$informeUrl = app_url('/assets/Informe_Zurita_Virtualizacion.pdf');
+
 // Fetch publications and perfil from database
 $perfil = [
     'nombre_completo'  => 'Nombre del Alumno',
@@ -42,6 +44,7 @@ try {
             <li><a href="<?= app_url('/') ?>" class="active">Inicio</a></li>
             <li><a href="#about">Sobre mí</a></li>
             <li><a href="#publicaciones">Publicaciones</a></li>
+            <li><a href="<?= $informeUrl ?>" download="Informe_Zurita_Virtualizacion.pdf">Download Informe</a></li>
 
         </ul>
     </div>
@@ -54,7 +57,7 @@ try {
         <p class="hero-subtitle"><?= htmlspecialchars($perfil['hero_descripcion'] ?? 'Descripción pendiente', ENT_QUOTES, 'UTF-8') ?></p>
         <div class="hero-actions">
             <a href="#about" class="btn btn-primary">Sobre mí</a>
-            <a href="#publicaciones" class="btn btn-secondary">Ver publicaciones</a>
+            <a href="<?= $informeUrl ?>" class="btn btn-secondary" download="Informe_Zurita_Virtualizacion.pdf">Download Informe</a>
         </div>
     </div>
 
